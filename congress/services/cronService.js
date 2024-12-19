@@ -98,12 +98,12 @@ class CronService {
     async extractCostFromText(text) {
         try {
             const openai = new OpenAI({
-                apiKey: process.env.OPENAI_API_KEY,
+                apiKey: "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",
                 baseURL: "https://openrouter.ai/api/v1"
             });
 
             const completion = await openai.chat.completions.create({
-                model: "gpt-3.5-turbo",
+                model: "openai/gpt-4o-mini",
                 messages: [
                     {
                         role: "system",
