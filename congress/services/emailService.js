@@ -14,7 +14,7 @@ class EmailService {
     }
 
     async getSubscribers() {
-        const subscribersPath = path.join(__dirname, '../data/subscribers.json');
+        const subscribersPath = path.join('/var/data/subscribers.json');
         const data = await fs.readFile(subscribersPath, 'utf8');
         return JSON.parse(data).subscribers;
     }

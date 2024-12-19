@@ -28,7 +28,7 @@ app.post('/api/subscribe', async (req, res) => {
             return res.status(400).json({ error: 'Invalid email address' });
         }
 
-        const subscribersPath = path.join(__dirname, 'data/subscribers.json');
+        const subscribersPath = path.join('/var/data/subscribers.json');
         const data = await fs.readFile(subscribersPath, 'utf8');
         const subscribers = JSON.parse(data);
 
