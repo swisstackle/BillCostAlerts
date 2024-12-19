@@ -98,7 +98,7 @@ class CronService {
     async extractCostFromText(text) {
         try {
             const openai = new OpenAI({
-                apiKey: "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",
+                apiKey: process.env.OPENAI_API_KEY,
                 baseURL: "https://openrouter.ai/api/v1"
             });
 

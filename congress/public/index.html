@@ -145,6 +145,7 @@
             console.error('Cost estimate failed 3');
                     throw new Error('Failed to fetch CBO page');
                 }
+                console.log('fetching');
                 const data = await response.json();
                 return {
                     pdfUrl: data.pdfUrl,
