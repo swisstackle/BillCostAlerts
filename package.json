@@ -17,7 +17,8 @@
     "pdf-parse": "^1.1.1",
     "node-cron": "^3.0.2",
     "nodemailer": "^6.9.7",
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0-rc.12",
+    "resend": "4.0.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",
