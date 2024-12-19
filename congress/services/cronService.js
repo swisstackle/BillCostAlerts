@@ -103,7 +103,7 @@ class CronService {
             });
 
             const completion = await openai.chat.completions.create({
-                model: "openai/gpt-4o-mini",
+                model: "openai/gpt-4o",
                 messages: [
                     {
                         role: "system",
