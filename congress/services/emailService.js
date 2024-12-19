@@ -31,7 +31,7 @@ class EmailService {
                 <p><strong>Estimated Cost:</strong> ${costEstimate}</p>
                 <p><strong>Latest Action:</strong> ${billInfo.latestAction.text} (${billInfo.latestAction.actionDate})</p>
                 <p><strong>CBO Report:</strong> <a href="${pdfUrl}">Download PDF</a></p>
-                <p><strong>Bill Details:</strong> <a href="${billInfo.url.replace('?format=json', '')}">View on Congress.gov</a></p>
+                <p><strong>Bill Details:</strong> <a href="https://www.congress.gov/bill/${billInfo.congress}th-congress/${billInfo.type.toLowerCase()}/${billInfo.number}">View on Congress.gov</a></p>
             `;
 
             const plainText = `
