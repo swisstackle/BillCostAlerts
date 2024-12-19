@@ -64,7 +64,7 @@ router.get('/proxy-cbo', async (req, res) => {
         const billInfo = JSON.parse(req.query.billInfo || '{}');
 
         if (!cboUrl) {
-            console.log('No CBO URL provided');
+            console.error('No CBO URL provided');
             return res.status(400).json({ error: 'URL parameter is required' });
         }
 
@@ -98,7 +98,7 @@ router.get('/proxy-cbo', async (req, res) => {
             }
         } else {
 
-            console.log('Cost estimate failed 1');
+            console.error('Cost estimate failed 1');
             res.json({ pdfUrl: null, costEstimate: null });
         }
     } catch (error) {
