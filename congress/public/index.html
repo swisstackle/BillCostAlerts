@@ -203,19 +203,21 @@
                 const billCard = document.createElement('div');
                 billCard.className = 'bill-card';
                 
-                billCard.innerHTML = `
-                    <div class="bill-title">${bill.title}</div>
-                    <p>Congress: ${bill.congress}</p>
-                    <p>Bill Number: ${bill.type}${bill.number}</p>
-                    <p>Origin Chamber: ${bill.originChamber}</p>
-                    <p class="latest-action">Latest Action (${bill.latestAction.actionDate}): 
-                        ${bill.latestAction.text}</p>
-                    <p>Last Updated: ${new Date(bill.updateDateIncludingText).toLocaleString()}</p>
-                    <div id="cbo-${bill.congress}-${bill.type}${bill.number}" class="cbo-estimates">
-                        <p>Loading CBO estimates...</p>
-                    </div>
-                    <a href="${bill.url.replace('?format=json', '')}" target="_blank">View Details</a>
-                `;
+
+billCard.innerHTML = `
+    <div class="bill-title">${bill.title}</div>
+    <p>Congress: ${bill.congress}</p>
+    <p>Bill Number: ${bill.type}${bill.number}</p>
+    <p>Origin Chamber: ${bill.originChamber}</p>
+    <p class="latest-action">Latest Action (${bill.latestAction.actionDate}): 
+        ${bill.latestAction.text}</p>
+    <p>Last Updated: ${new Date(bill.updateDateIncludingText).toLocaleString()}</p>
+    <div id="cbo-${bill.congress}-${bill.type}${bill.number}" class="cbo-estimates">
+        <p>Loading CBO estimates...</p>
+    </div>
+    <a href="https://www.congress.gov/bill/${bill.congress}/${bill.type.toLowerCase() === 'hr' ? 'house-bill' : 'senate-bill'}/${bill.number}" 
+        target="_blank">View Details</a>
+`;
                 
                 container.appendChild(billCard);
 
