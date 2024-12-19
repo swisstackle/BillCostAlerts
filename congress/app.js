@@ -37,6 +37,9 @@ app.post('/api/subscribe', async (req, res) => {
             return res.status(400).json({ error: 'Email already subscribed' });
         }
 
+        console.log(email, ' is subscribing');
+
+        console.error(email, ' is subscribing');
         // Add new email
         subscribers.subscribers.push(email);
 
