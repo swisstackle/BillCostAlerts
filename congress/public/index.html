@@ -129,7 +129,7 @@
             } catch (error) {
                 messageDiv.style.display = 'block';
                 messageDiv.style.color = 'red';
-                messageDiv.textContent = 'Error subscribing. Please try again.';
+                messageDiv.textContent = 'Error subscribing. Please try again.' + error;
             }
 
             setTimeout(() => {
@@ -142,7 +142,7 @@
                 const response = await fetch(`/api/proxy-cbo?url=${encodeURIComponent(cboUrl)}&billInfo=${encodeURIComponent(JSON.stringify(billInfo))}`);
                 if (!response.ok) {
 
-            console.log('Cost estimate failed 3');
+            console.error('Cost estimate failed 3');
                     throw new Error('Failed to fetch CBO page');
                 }
                 const data = await response.json();
@@ -152,7 +152,7 @@
                 };
             } catch (error) {
 
-            console.log('Cost estimate failed 4');
+            console.error('Cost estimate failed 4');
                 console.error('Error fetching CBO PDF:', error);
                 return null;
             }
@@ -227,7 +227,7 @@
                         let estimatesHtml = '<h4>CBO Cost Estimates:</h4>';
                         
                         for (const estimate of cboEstimates) {
-                            console.log('fetching');
+                            console.error('fetching');
                             const cboData = await fetchPdfUrlFromCboPage(estimate.url, {
                                 title: bill.title,
                                 type: bill.type,
@@ -236,7 +236,7 @@
                                 latestAction: bill.latestAction,
                                 url: bill.url
                             });
-                            console.log("url: ", cboData?.pdfUrl)
+                            console.error("url: ", cboData?.pdfUrl)
                             estimatesHtml += `
                                 <div class="cbo-estimate-item">
                                     <p><strong>${estimate.title}</strong></p>
