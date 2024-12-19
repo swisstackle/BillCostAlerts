@@ -1,10 +1,16 @@
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 const fs = require('fs').promises;
 const path = require('path');
 
 class EmailService {
     constructor() {
-        this.resend = new Resend(process.env.RESEND_API_KEY);
+        this.transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: "alain.schaerer@gmail.com",
+                pass: process.env.APP_PASSWORD
+            }
+        });
     }
 
     async getSubscribers() {
@@ -42,30 +48,16 @@ class EmailService {
 
             for (const subscriber of subscribers) {
                 try {
-                    const { data, error } = await this.resend.emails.send({
-                        from: 'Congressional Bills Alert <onboarding@resend.dev>',
-                        to: [subscriber],
+                    const mailOptions = {
+                        from: `Congressional Bills Alert <${process.env.GMAIL_USER}>`,
+                        to: subscriber,
                         subject: `High Cost Bill Alert: ${billInfo.type}${billInfo.number}`,
-                        html: emailContent,
                         text: plainText,
-                        tags: [
-                            {
-                                name: 'bill_number',
-                                value: `${billInfo.type}${billInfo.number}`
-                            },
-                            {
-                                name: 'congress',
-                                value: billInfo.congress.toString()
-                            }
-                        ]
-                    });
+                        html: emailContent
+                    };
 
-                    if (error) {
-                        console.error(`Failed to send email to ${subscriber}:`, error);
-                        continue;
-                    }
-
-                    console.log(`Email sent successfully to ${subscriber}:`, data.id);
+                    const info = await this.transporter.sendMail(mailOptions);
+                    console.log(`Email sent successfully to ${subscriber}:`, info.messageId);
                 } catch (emailError) {
                     console.error(`Error sending to ${subscriber}:`, emailError);
                 }
@@ -78,23 +70,19 @@ class EmailService {
         }
     }
 
-    // Test method to verify email service is working
     async testEmailService() {
         try {
             const subscribers = await this.getSubscribers();
-            const { data, error } = await this.resend.emails.send({
-                from: 'Congressional Bills Alert <onboarding@resend.dev>',
-                to: [subscribers[0]], // Send test email to first subscriber
+            const mailOptions = {
+                from: `Congressional Bills Alert <${process.env.GMAIL_USER}>`,
+                to: subscribers[0], // Send test email to first subscriber
                 subject: 'Test Email - Congressional Bills Alert System',
                 html: '<h1>Test Email</h1><p>This is a test email from the Congressional Bills Alert System.</p>'
-            });
+            };
 
-            if (error) {
-                throw error;
-            }
-
-            console.log('Test email sent successfully:', data);
-            return data;
+            const info = await this.transporter.sendMail(mailOptions);
+            console.log('Test email sent successfully:', info.messageId);
+            return info;
         } catch (error) {
             console.error('Error sending test email:', error);
             throw error;
